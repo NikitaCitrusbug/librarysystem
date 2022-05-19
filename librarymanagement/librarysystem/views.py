@@ -229,6 +229,12 @@ class AddIssue(CreateView):
 class IssueBookRetrieve(ListView):
     model = IssuedBooks
     template_name = 'issuebook/list_issue.html'
+    def get(self ,request , pk):
+            context = {}
+            context['name'] = IssuedBooks.objects.get(id = pk)
+            
+            
+            return render(request , self.template_name , context)
 
 class IssueBookDetail(DetailView):
     model = IssuedBooks
