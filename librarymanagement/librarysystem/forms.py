@@ -88,9 +88,19 @@ class UpdateAuthorForm(forms.ModelForm):
         model = Author
         fields = '__all__'
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 class IssuedBooksForm(forms.ModelForm):
     class Meta:
         model = IssuedBooks
         fields = '__all__'
-
+        widgets = {
+        'return_date' : DateInput(),
+        'issued_date': DateInput(),
+        'issued_date' : forms.HiddenInput()
+        }
+class UpdateIssueBookForm(forms.ModelForm):
+    class Meta:
+        model = IssuedBooks
+        fields = '__all__'

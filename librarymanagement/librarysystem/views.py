@@ -13,7 +13,7 @@ from django import forms
 from librarysystem import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from librarysystem.models import Author, Category, User, AbstractUser, Book , IssuedBooks
-from librarysystem.forms import AddForm, CustomMemberCreationForm, CustomUserCreationForm, LoginForm, AddCategoryForm, AddAuthorForm, UpdateBookForm , UpdateAuthorForm , UpdateCategoryForm , IssuedBooksForm
+from librarysystem.forms import AddForm, CustomMemberCreationForm, CustomUserCreationForm, LoginForm, AddCategoryForm, AddAuthorForm, UpdateBookForm , UpdateAuthorForm , UpdateCategoryForm , IssuedBooksForm , UpdateIssueBookForm
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.forms import AuthenticationForm
@@ -218,12 +218,11 @@ class AddIssue(CreateView):
     model = IssuedBooks
     form_class = IssuedBooksForm
     template_name = 'issuebook/issue.html'
-
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('authorretrieve')
+            return redirect('issueretrieve')
         else:
             return HttpResponse('error')
 
@@ -235,9 +234,16 @@ class IssueBookDetail(DetailView):
     model = IssuedBooks
     template_name = 'issuebook/details_issue.html'
 
+    def get(self ,request , pk):
+            context = {}
+            context['object'] = IssuedBooks.objects.get(id = pk)
+            
+            
+            return render(request , self.template_name , context)
+
 class IssueBookUpdate(UpdateView):
     model = IssuedBooks
-    form_class = UpdateAuthorForm
+    form_class = UpdateIssueBookForm
     template_name = 'issuebook/update_issue.html'
     
     def get_success_url(self):
