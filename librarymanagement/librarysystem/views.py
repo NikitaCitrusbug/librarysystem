@@ -24,7 +24,6 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 
-
 class Home(View):
     template_name = 'home.html'
 
@@ -48,6 +47,7 @@ class BookView(View):
 class BookRetrieve(ListView):
     model = Book
     template_name = 'book/book_list.html'
+    
 
 class AddBook(CreateView):
     model = Book
@@ -64,7 +64,7 @@ class AddBook(CreateView):
                 print(a)
                 authors = Author.objects.get(id = a)
                 authors.book.add(book)
-            
+               
             
 
             # print(authors)
@@ -229,12 +229,16 @@ class AddIssue(CreateView):
 class IssueBookRetrieve(ListView):
     model = IssuedBooks
     template_name = 'issuebook/list_issue.html'
+
+    # permission_classes = [isAuthenticated]
+    # queryset = Post.objects.all()
+    # serializer_class = PostSerializer
+
     def get(self ,request , pk):
-            context = {}
-            context['name'] = IssuedBooks.objects.get(id = pk)
+        context = {}
+        context['name'] = IssuedBooks.objects.get(book= pk)
             
-            
-            return render(request , self.template_name , context)
+        return render(request , self.template_name , context)
 
 class IssueBookDetail(DetailView):
     model = IssuedBooks

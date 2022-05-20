@@ -1,4 +1,5 @@
 from dataclasses import fields
+from multiprocessing.sharedctypes import Value
 from tkinter import Widget
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -43,9 +44,9 @@ class LoginForm(UserCreationForm):
 
 
 class AddForm(forms.ModelForm):
-    authorname = forms.ModelMultipleChoiceField(queryset=Author.objects.all(), required=False)
+    authorname = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple ,queryset=Author.objects.all(), required=False)
     
-    widget=forms.CheckboxSelectMultiple()
+    
     class Meta:
         model = Book
         fields = ['name' , 'discription' , 'quantity' , 'category' , 'authorname']
@@ -95,11 +96,11 @@ class IssuedBooksForm(forms.ModelForm):
     class Meta:
         model = IssuedBooks
         fields = '__all__'
-        widgets = {
+    widgets = {
         'return_date' : DateInput(),
         'issued_date': DateInput(),
         'issued_date' : forms.HiddenInput()
-        }
+    }
 class UpdateIssueBookForm(forms.ModelForm):
     class Meta:
         model = IssuedBooks

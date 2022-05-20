@@ -4,14 +4,20 @@
 {% for IssueBook in object_list %}
 <ul>
   <li>
-    <a href="{% url 'issuebookdetail' IssueBook.pk %}"> book </a> : {{name.book}}
-    {% for name in IssueBook.book.all %}<br>
+    <a href="{% url 'issuebookdetail' IssueBook.pk %}"> book </a> : {{book.name}}    
+      
+
+    <!-- {% for name in IssueBook.book.all %}<br>
     {{name}}
-    {% endfor %}
+    {% endfor %} -->
+  </li>
+  <li>
+    <a href="{% url 'issuebookdetail' IssueBook.pk %}"> user_name </a> : {{IssueBook.user_name}} 
   </li>
 
   <button type="button" class="btn btn-info">
     <a href="{% url 'issuebookupdate' IssueBook.pk %}">Update</a>
   </button>
 </ul>
-{% endfor %} {% endblock content %}
+{% endfor %}
+{% endblock content %}
