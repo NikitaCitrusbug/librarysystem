@@ -1,9 +1,5 @@
 <title>User Signup</title>
-<script>
-  function validate(){
-    alert("please fill the signup member form")
-  }
-</script>
+
 {% extends 'base1.html' %} {% load static %} {% block content %}
     <div class="container" style="background-color: rgb(180, 171, 171) ;">
         <br>
@@ -26,7 +22,7 @@
           <div>confirm password : {{form.password2}}</div>
           <br />
           
-          <button class= "btn btn-success" style="background-color: green; color: white; margin: 20px" onclick="return validate()">
+          <button class= "btn btn-success" style="background-color: green; color: white; margin: 20px">
             Register
           </button>
           <div>
